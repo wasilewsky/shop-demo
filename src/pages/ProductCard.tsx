@@ -19,12 +19,10 @@ function ProductCard({ product }: ProductCardProps) {
     return (
         <div>
             <img src={product.image} alt={product.title} />
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <p>{product.price}</p>
+            <h2>{product.title}</h2>
+            <p>$ {product.price}</p>
             <p>{product.category}</p>
-            <p>{product.rating.rate}</p>
-            <p>{product.rating.count}</p>
+            <p>{product.rating.rate} ({product.rating.count})</p>
         </div>
     );
 }
