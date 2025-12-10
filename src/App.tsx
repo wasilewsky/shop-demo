@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { useCart } from './pages/cart/CartContext';
 
 function App() {
-  const { total } = useCart();
+  const { total, clear } = useCart();
   
   return (
     <div>
@@ -14,6 +14,7 @@ function App() {
         </nav>
         <div>
           🛒 <span>{total}</span>
+          <button onClick={clear}>Reset</button>
         </div>
       </header>
       <main>
