@@ -1,7 +1,10 @@
 import './App.css'
 import { Link, Outlet } from 'react-router-dom'
+import { useCart } from './pages/cart/CartContext';
 
 function App() {
+  const { total } = useCart();
+  
   return (
     <div>
       <header>
@@ -10,7 +13,7 @@ function App() {
           <Link to="/products">Products</Link>
         </nav>
         <div>
-          Cart
+          🛒 <span>{total}</span>
         </div>
       </header>
       <main>

@@ -13,9 +13,12 @@ interface ProductProps {
 
 interface ProductCardProps {
     product: ProductProps;
+    quantity: number;
+    onAdd: () => void;
+    onRemove: () => void;
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product, quantity, onAdd, onRemove }: ProductCardProps) {
     return (
         <div>
             <img src={product.image} alt={product.title} />
@@ -23,6 +26,9 @@ function ProductCard({ product }: ProductCardProps) {
             <p>$ {product.price}</p>
             <p>{product.category}</p>
             <p>{product.rating.rate} ({product.rating.count})</p>
+            <button onClick={onRemove} disabled={quantity === 0}>-</button>
+            <span>{quantity}</span>
+            <button onClick={onAdd}>+</button>
         </div>
     );
 }

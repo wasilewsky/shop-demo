@@ -6,17 +6,20 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home.tsx'
 import Products from './pages/Products.tsx'
 import NotFound from './pages/NotFound.tsx'
+import { CartProvider } from './pages/cart/CartContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="products" element={<Products />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Home />} />
+            <Route path="products" element={<Products />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </CartProvider>
     </BrowserRouter>
   </StrictMode>,
 )

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
+import { useCart } from "./cart/CartContext";
 
 interface ProductProps {
     id: number;
@@ -19,6 +20,8 @@ function Products() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState<'default' | 'title' | 'price-low' | 'price-high'>('default');
+
+    const { cart, add, remove } = useCart();
 
     useEffect(() => {
         fetch('https://fakestoreapi.com/products')
@@ -42,21 +45,26 @@ function Products() {
 
     return (
         <div>
-        <h1>Welcome to the Products Page</h1>
-        <p>This is the product listing page.</p>
-        <select value={sortBy} onChange={e => setSortBy(e.target.value as 'default' | 'title' | 'price-low' | 'price-high')}>
-            <option value="default">Default</option>
-            <option value="title">Title (A-Z)</option>
-            <option value="price-low">Price (Low-High)</option>
-            <option value="price-high">Price (High-Low)</option>
-        </select>
-        <ul>
-            {sortedProducts.map(product => (
-                <li key={product.id}>
-                    <ProductCard product={product} />
-                </li>
-            ))}
-        </ul>
+            <h1>Welcome to the Products Page</h1>
+            <p>This is the product listing page.</p>
+            <select value={sortBy} onChange={e => setSortBy(e.target.value as 'default' | 'title' | 'price-low' | 'price-high')}>
+                <option value="default">Default</option>
+                <option value="title">Title (A-Z)</option>
+                <option value="price-low">Price (Low-High)</option>
+                <option value="price-high">Price (High-Low)</option>
+            </select>
+            <ul>
+                {sortedProducts.map(product => (
+                    <li key={product.id}>
+                        <ProductCard 
+                            product={product} 
+                            quantity={cart[product.id] ?? 0} 
+                            onAdd={() => add(product.id)} 
+                            onRemove={() => remove(product.id)} 
+                        />
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
