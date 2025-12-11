@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./components/ProductCard";
 import { useCart } from "./cart/CartContext";
 
 interface ProductProps {
@@ -37,17 +37,17 @@ function Home() {
     if (error) return <div>Failed to fetch products</div>;
 
     return (
-    <div>
-        <h1>Welcome to the Home Page</h1>
-        {product && 
-            <ProductCard 
-                product={product} 
-                quantity={cart[product.id] ?? 0} 
-                onAdd={() => add(product.id)} 
-                onRemove={() => remove(product.id)} 
-            />
-        }
-    </div>
+        <div className="page-container">
+            <h1>Welcome to the Home Page</h1>
+            {product && 
+                <ProductCard 
+                    product={product} 
+                    quantity={cart[product.id] ?? 0} 
+                    onAdd={() => add(product.id)} 
+                    onRemove={() => remove(product.id)} 
+                />
+            }
+        </div>
   );
 }
 

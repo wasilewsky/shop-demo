@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./components/ProductCard";
 import { useCart } from "./cart/CartContext";
 
 interface ProductProps {
@@ -44,27 +44,23 @@ function Products() {
             : (a, b) => b.price - a.price);
 
     return (
-        <div>
+        <div className="page-container">
             <h1>Welcome to the Products Page</h1>
-            <p>This is the product listing page.</p>
             <select value={sortBy} onChange={e => setSortBy(e.target.value as 'default' | 'title' | 'price-low' | 'price-high')}>
                 <option value="default">Default</option>
                 <option value="title">Title (A-Z)</option>
                 <option value="price-low">Price (Low-High)</option>
                 <option value="price-high">Price (High-Low)</option>
             </select>
-            <ul>
-                {sortedProducts.map(product => (
-                    <li key={product.id}>
-                        <ProductCard 
-                            product={product} 
-                            quantity={cart[product.id] ?? 0} 
-                            onAdd={() => add(product.id)} 
-                            onRemove={() => remove(product.id)} 
-                        />
-                    </li>
-                ))}
-            </ul>
+            {sortedProducts.map(product => (
+                <ProductCard 
+                    key={product.id}
+                    product={product} 
+                    quantity={cart[product.id] ?? 0} 
+                    onAdd={() => add(product.id)} 
+                    onRemove={() => remove(product.id)} 
+                />
+            ))}
         </div>
     );
 }

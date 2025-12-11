@@ -20,15 +20,17 @@ interface ProductCardProps {
 
 function ProductCard({ product, quantity, onAdd, onRemove }: ProductCardProps) {
     return (
-        <div>
+        <div className="product-card">
             <img src={product.image} alt={product.title} />
-            <h2>{product.title}</h2>
-            <p>$ {product.price}</p>
+            <h3>{product.title}</h3>
+            <p>💰 {product.price}</p>
             <p>{product.category}</p>
-            <p>{product.rating.rate} ({product.rating.count})</p>
-            <button onClick={onRemove} disabled={quantity === 0}>-</button>
-            <span>{quantity}</span>
-            <button onClick={onAdd}>+</button>
+            <p>⭐ {product.rating.rate} ({product.rating.count})</p>
+            <div>
+                <button onClick={onRemove} disabled={quantity === 0}>-</button>
+                <span>{quantity}</span>
+                <button onClick={onAdd}>+</button>
+            </div>
         </div>
     );
 }
