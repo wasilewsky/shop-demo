@@ -34,8 +34,24 @@ function Products() {
         .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Failed to fetch products</div>;
+    if (loading) {
+        return (
+          <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900"></div>
+            <p className="text-slate-600">Loading products...</p>
+          </div>
+        );
+      }
+    
+      if (error) {
+        return (
+          <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+            <div className="text-red-500 text-xl">⚠️</div>
+            <p className="text-lg text-slate-900">Failed to fetch products</p>
+            <p className="text-slate-600">{error}</p>
+          </div>
+        );
+      }
 
     const sortedProducts = 
         sortBy === 'default' ? products : [...products].sort(
@@ -44,23 +60,40 @@ function Products() {
             : (a, b) => b.price - a.price);
 
     return (
-        <div className="page-container">
-            <h1>Welcome to the Products Page</h1>
-            <select value={sortBy} onChange={e => setSortBy(e.target.value as 'default' | 'title' | 'price-low' | 'price-high')}>
+        <div className="flex flex-col items-center gap-6 text-center w-full">
+            <div className="flex flex-col items-center gap-4">
+            <h1 className="text-3xl font-bold text-slate-900">Products</h1>
+            <p className="text-slate-600">Browse our collection</p>
+            </div>
+            
+            <div className="flex items-center gap-3">
+            <label htmlFor="sort" className="text-sm font-medium text-slate-700">
+                Sort by:
+            </label>
+            <select 
+                id="sort"
+                value={sortBy} 
+                onChange={e => setSortBy(e.target.value as 'default' | 'title' | 'price-low' | 'price-high')}
+                className="px-4 py-2 border border-sky-200 rounded-lg bg-white text-slate-900 cursor-pointer"
+            >
                 <option value="default">Default</option>
                 <option value="title">Title (A-Z)</option>
                 <option value="price-low">Price (Low-High)</option>
                 <option value="price-high">Price (High-Low)</option>
             </select>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             {sortedProducts.map(product => (
                 <ProductCard 
-                    key={product.id}
-                    product={product} 
-                    quantity={cart[product.id] ?? 0} 
-                    onAdd={() => add(product.id)} 
-                    onRemove={() => remove(product.id)} 
+                key={product.id}
+                product={product} 
+                quantity={cart[product.id] ?? 0} 
+                onAdd={() => add(product.id)} 
+                onRemove={() => remove(product.id)} 
                 />
             ))}
+            </div>
         </div>
     );
 }
